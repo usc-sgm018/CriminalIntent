@@ -1,21 +1,30 @@
 package com.bignerdranch.android.criminalintent
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.text.format.DateFormat
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.criminalintent.databinding.ListItemCrimeBinding
 
 class CrimeHolder (private val binding: ListItemCrimeBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(crime: Crime) {
         binding.crimeTitle.text = crime.title
-        binding.crimeDate.text = crime.date.toString()
+        binding.crimeDate.text = DateFormat.format("EEEE, dd MMM yyyy, hh:mm", crime.date)
 
         binding.root.setOnClickListener {
             Toast.makeText(binding.root.context,
                 "${crime.title} clicked!",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+
+        //image visibility
+        binding.crimeSolved.visibility = if (crime.isSolved) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 }
