@@ -1,9 +1,10 @@
 package com.bignerdranch.android.criminalintent
 
+import androidx.lifecycle.ViewModel
 import java.util.Date
 import java.util.UUID
 
-class CrimeListViewModel {
+class CrimeListViewModel : ViewModel() {
 
     val crimes = mutableListOf<Crime>()
 
