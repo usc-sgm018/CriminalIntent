@@ -2,7 +2,7 @@ package com.bignerdranch.android.criminalintent
 
 import android.content.Context
 import androidx.room.Room
-import database.CrimeDatabase
+import com.bignerdranch.android.criminalintent.database.CrimeDatabase
 import java.lang.IllegalStateException
 import java.util.UUID
 
@@ -27,7 +27,7 @@ class CrimeRepository private constructor(context: Context) {
         private var INSTANCE: CrimeRepository? = null
 
         fun initialize(context: Context) {
-            if(INSTANCE == null) {
+            if (INSTANCE == null) {
                 INSTANCE = CrimeRepository(context)
             }
         }
