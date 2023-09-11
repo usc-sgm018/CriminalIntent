@@ -5,19 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.text.format.DateFormat
-//DateFormat.format("EEEE, dd MMM yyyy, hh:mm", crime.date)
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.criminalintent.databinding.ListItemCrimeBinding
+import java.util.UUID
 
 class CrimeHolder (private val binding: ListItemCrimeBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(crime: Crime) {
+    fun bind(crime: Crime, onCrimeClicked: (crimeId: UUID) -> Unit) {
         binding.crimeTitle.text = crime.title
-        binding.crimeDate.text = crime.date.toString()
+        //binding.crimeDate.text = crime.date.toString()
+        binding.crimeDate.text = DateFormat.format("EEEE, dd MMM yyyy, hh:mm", crime.date)
         binding.root.setOnClickListener {
-            Toast.makeText(binding.root.context,
-                "${crime.title} clicked!",
-                Toast.LENGTH_SHORT
-            ).show()
+            onCrimeClicked(crime.id)
         }
 
         //image visibility
@@ -29,8 +27,9 @@ class CrimeHolder (private val binding: ListItemCrimeBinding) : RecyclerView.Vie
     }
 }
 
-class CrimeListAdapter(private val crimes: List<Crime>) : RecyclerView.Adapter<CrimeHolder>() {
-
+class CrimeListAdapter(
+    private val crimes: List<Crime>,
+    private val onCrimeClicked: (crimeId: UUID) -> Unit) : RecyclerView.Adapter<CrimeHolder>() {
     //creates a binding to display, wraps the view in a view holder, and returns the result
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CrimeHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -41,7 +40,7 @@ class CrimeListAdapter(private val crimes: List<Crime>) : RecyclerView.Adapter<C
     //populates a given holder with the crime from a given position
     override fun onBindViewHolder(holder: CrimeHolder, position: Int) {
         val crime = crimes[position]
-        holder.bind(crime)
+        holder.bind(crime, onCrimeClicked)
     }
 
     //returns the number of items in the list of crimes to answer the recycler view's request
